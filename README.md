@@ -1,3 +1,12 @@
+##
+
+This is special fork that uses namespaces instead of import/export
+
+1. Run "tsc"
+2. Open "dist/pixi-sound.d.ts" and replace "declare namespace pixi_sound" to "declare module PIXI.sound"
+
+Work in progress.
+
 # PIXI.sound
 
 WebAudio API playback library, with filters. Modern audio playback for modern browsers. 
