@@ -703,11 +703,6 @@ var pixi_sound;
     }());
     pixi_sound.SoundLibrary = SoundLibrary;
 })(pixi_sound || (pixi_sound = {}));
-var pixi_sound;
-(function (pixi_sound) {
-    pixi_sound.sound = pixi_sound.SoundLibrary.init();
-})(pixi_sound || (pixi_sound = {}));
-PIXI.sound = pixi_sound;
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -2414,4 +2409,9 @@ var pixi_sound;
         webaudio.WebAudioNodes = WebAudioNodes;
     })(webaudio = pixi_sound.webaudio || (pixi_sound.webaudio = {}));
 })(pixi_sound || (pixi_sound = {}));
+var pixi_sound;
+(function (pixi_sound) {
+    pixi_sound.sound = pixi_sound.SoundLibrary.init();
+})(pixi_sound || (pixi_sound = {}));
+PIXI.sound = pixi_sound;
 //# sourceMappingURL=pixi-sound.js.map
