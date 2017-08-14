@@ -1,14 +1,14 @@
 {
     "compilerOptions": {
-        "moduleResolution": "node",
+        "module": "none",
         "target": "es5",
+        "outFile": "dist/pixi-sound.js",
         "removeComments": true,
         "noImplicitAny": true,
         "preserveConstEnums": true,
         "sourceMap": true,
         "inlineSources": true,
-        "declaration": true,
-        "declarationDir": "dist/types"
+        "declaration": true
     },
     "files": [
         "typings/index.d.ts"

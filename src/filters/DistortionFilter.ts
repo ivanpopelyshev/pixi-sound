@@ -1,80 +1,73 @@
-import Filter from './Filter';
-import SoundLibrary from '../SoundLibrary';
+namespace pixi_sound.filters {
+	/**
+	 * Filter for adding adding delaynode.
+	 *
+	 * @class DistortionFilter
+	 * @memberof PIXI.sound.filters
+	 * @param {number} [amount=0] The amount of distoration from 0 to 1.
+	 */
+	export class DistortionFilter extends Filter {
+		/**
+		 * The Wave shape node use to distort
+		 * @name PIXI.sound.filters.DistortionFilter#_distortion
+		 * @type {WaveShaperNode}
+		 * @private
+		 */
+		private _distortion: WaveShaperNode;
 
-/**
- * Filter for adding adding delaynode.
- *
- * @class DistortionFilter
- * @memberof PIXI.sound.filters
- * @param {number} [amount=0] The amount of distoration from 0 to 1.
- */
-export default class DistortionFilter extends Filter
-{
-    /**
-     * The Wave shape node use to distort
-     * @name PIXI.sound.filters.DistortionFilter#_distortion
-     * @type {WaveShaperNode}
-     * @private
-     */
-    private _distortion:WaveShaperNode;
+		/**
+		 * The amount of distoration
+		 * @name PIXI.sound.filters.DistortionFilter#_amount
+		 * @type {number}
+		 * @private
+		 */
+		private _amount: number;
 
-    /**
-     * The amount of distoration
-     * @name PIXI.sound.filters.DistortionFilter#_amount
-     * @type {number}
-     * @private
-     */
-    private _amount:number;
+		constructor(amount: number = 0) {
+			if (SoundLibrary.instance.useLegacy) {
+				super(null);
+				return;
+			}
 
-    constructor(amount:number = 0)
-    {
-        if (SoundLibrary.instance.useLegacy)
-        {
-            super(null);
-            return;
-        }
-        
-        const context = SoundLibrary.instance.context;
-        const distortion:WaveShaperNode = context.audioContext.createWaveShaper();
+			const context = SoundLibrary.instance.context;
+			const distortion: WaveShaperNode = context.audioContext.createWaveShaper();
 
-        super(distortion);
+			super(distortion);
 
-        this._distortion = distortion;
+			this._distortion = distortion;
 
-        this.amount = amount;
-    }
+			this.amount = amount;
+		}
 
-    /**
-     * @name PIXI.sound.filters.Distoration#amount
-     * @type {number}
-     */
-    set amount(value:number)
-    {
-        value *= 1000;
-        this._amount = value;
-        const samples:number = 44100;
-        const curve:Float32Array = new Float32Array(samples);
-        const deg:number = Math.PI / 180;
+		/**
+		 * @name PIXI.sound.filters.Distoration#amount
+		 * @type {number}
+		 */
+		set amount(value: number) {
+			value *= 1000;
+			this._amount = value;
+			const samples: number = 44100;
+			const curve: Float32Array = new Float32Array(samples);
+			const deg: number = Math.PI / 180;
 
-        let i:number = 0;
-        let x:number;
+			let i: number = 0;
+			let x: number;
 
-        for ( ; i < samples; ++i )
-        {
-            x = i * 2 / samples - 1;
-            curve[i] = ( 3 + value ) * x * 20 * deg / ( Math.PI + value * Math.abs(x) );
-        }
-        this._distortion.curve = curve;
-        this._distortion.oversample = '4x';
-    }
-    get amount(): number
-    {
-        return this._amount;
-    }
+			for (; i < samples; ++i) {
+				x = i * 2 / samples - 1;
+				curve[i] = ( 3 + value ) * x * 20 * deg / ( Math.PI + value * Math.abs(x) );
+			}
+			this._distortion.curve = curve;
+			this._distortion.oversample = '4x';
+		}
 
-    destroy(): void
-    {
-        this._distortion = null;
-        super.destroy();
-    }
+		get amount(): number {
+			return this._amount;
+		}
+
+		destroy(): void {
+			this._distortion = null;
+			super.destroy();
+		}
+	}
 }
